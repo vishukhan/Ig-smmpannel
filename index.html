@@ -333,30 +333,35 @@
             </div>
           </div>
         </div>
-
         <div class="right">
           <form id="contactForm">
             <label for="name">Name</label>
             <input id="name" name="name" required placeholder="Your name" />
             <label for="phone">Phone / WhatsApp</label>
             <input id="phone" name="phone" required placeholder="99999-88888" />
-            <label for="service">Select Plan</label>
-            <select id="service" name="service">
-              <option>Instagram Cheaper Followers</option>
-              <option>Instagram Reels Views</option>
-              <option>Instagram Reels Likes</option>  
-              <option>Instagram Real Followers</option>
-              <option>Instagram Indian Likes/Followers</optio>
+
+            <label for="service">Select Plan (Service)</label>
+            <select id="service" name="service" onchange="updateServiceDetails()">
+              <option value="💫world's cheapest Views👀✨️ - ₹30"> 💫world'scheapestViews👀✨️ - ₹30 </option>
+              <option value="💫Instagram Indian Likes❤️✨️ - ₹100"> 💫Instagram Indian likes❤️✨️ - ₹100 </option>
+              <option value="💫Real Indian Followers 🫂✨️- ₹300"> 💫Real Indian Followers 🫂✨️ - ₹300 </option>
             </select>
+            
+            <label for="displayPrice">Price</label>
+            <input id="displayPrice" readonly value="—" />
+            
+            <label for="displayDesc">Description</label>
+            <textarea id="displayDesc" readonly rows="3" style="min-height:50px">—</textarea>
+            
             <label for="message">Message</label>
             <textarea id="message" name="message" placeholder="Any details (optional)"></textarea>
             <div style="display:flex;gap:8px;margin-top:10px">
-              <button type="button" class="btn btn-primary" onclick="openOrderFromFrom('https://www.instagram.com/teri_jaatni.90?igsh=MTltNndxNnQzODgxdA==')">Send</button>
+              <button type="submit" class="btn btn-primary">Send</button>
               <button type="button" class="btn btn-outline" onclick="openWhatsOrderFromForm('https://wa.me/message/MRFDVSDLJC3YA1')">Send on WhatsApp</button>
             </div>
           </form>
         </div>
-      </div>
+
     </section>
 
   </main>
