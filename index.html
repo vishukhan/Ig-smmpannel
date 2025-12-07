@@ -356,8 +356,8 @@
             <label for="message">Message</label>
             <textarea id="message" name="message" placeholder="Any details (optional)"></textarea>
             <div style="display:flex;gap:8px;margin-top:10px">
-              <button type="submit" class="btn btn-primary">Send</button>
-              <button type="button" class="btn btn-outline" onclick="openWhatsOrderFromForm('https://wa.me/message/MRFDVSDLJC3YA1')"> Send on WhatsAppr</button>
+              <button type="submit" class="btn btn-primary" onclick="openWhatsOrderFromForm('https://wa.me/message/MRFDVSDLJC3YA1')">Send</button>
+              <button type="button" class="btn btn-outline" onclick="openWhatsOrderFromForm('https://wa.me/message/MRFDVSDLJC3YA1')">Send on WhatsApp</button>
             </div>
           </form>
         </div>
@@ -429,11 +429,11 @@
   //order list
   // DYNAMIC SERVICE DETAILS (UnitySMM Style)
   // DYNAMIC SERVICE DETAILS (UnitySMM Style)
-  const serviceData = {
-      "💫world's cheapest Views👀✨️ - ₹30": { desc: '💫world's cheapest Views👀✨️.', price: '₹30' },
-      "💫Instagram Real Indian Likes❤️✨️ - ₹100": {  desc: '💫Instagram Real Indian Likes❤️✨️.', price: '₹100' },
-      "💫Real Indian Followers 🫂✨️ - ₹350": { desc: '💫Real Indian Followers ❤️✨️', price: '₹350' }
-  };
+ // const serviceData = {
+     // "💫world's cheapest Views👀✨️ - ₹30": { desc: '💫world's cheapest Views👀✨️.', price: '₹30' },
+     // "💫Instagram Real Indian Likes❤️✨️ - ₹100": {  desc: '💫Instagram Real Indian Likes❤️✨️.', price: '₹100' },
+   //   "💫Real Indian Followers 🫂✨️ - ₹350": { desc: '💫Real Indian Followers ❤️✨️', price: '₹350' }
+ // };
 
   function updateServiceDetails() {
       const selectedService = document.getElementById('service').value;
