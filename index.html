@@ -30,29 +30,21 @@
             color: var(--text-color);
             line-height: 1.6;
         }
-        header {
-            background-color: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
-            padding: 10px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-          .logo svg{width:30px;height:30px;transform:scale(1.1)}
+        header{display:flex;align-items:center;justify-content:space-between;padding:14px 18px;background:transparent}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:44px;height:44px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#ff8ab3);display:flex;align-items:center;justify-content:center;color:white;font-weight:800;font-size:18px}
   nav.primary{display:flex;gap:12px;align-items:center}
   nav.primary a{color:var(--text);text-decoration:none;padding:8px 12px;border-radius:8px;font-weight:600}
   .cta{background:var(--accent);color:white;padding:10px 16px;border-radius:999px;text-decoration:none;font-weight:700}
 
+            nav a {
             color: var(--text-color);
             text-decoration: none;
             margin-left: 20px;
             padding: 5px;
             border-radius: 4px;
             transition: background 0.3s;
-        }
+            }
         nav a:hover {
             background-color: var(--border-color);
         }
