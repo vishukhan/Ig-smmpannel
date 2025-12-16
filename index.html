@@ -200,6 +200,75 @@
             text-decoration: none;
             font-size: 24px;
         }
+            /* QR कोड Modal/Pop-up CSS */
+        .modal-qr {
+            display: none; 
+            position: fixed;
+            z-index: 101; 
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color); 
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content-qr {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            position: relative;
+        }
+        .modal-content-qr img {
+            width: 100%;
+            max-width: 250px;
+            height: auto;
+            border: 1px solid #ddd;
+            margin: 15px 0;
+        }
+        .close-qr {
+            color: #aaa;
+            float: right;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+        }
+        .close-qr:hover {
+            color: #333;
+        }
+        .btn-modal-close {
+            background-color: #007bff; 
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+        
+        /* टाइमर स्टाइल */
+        #countdownDisplay {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #d9534f; /* लाल रंग */
+            margin-bottom: 10px;
+            padding: 5px;
+       //     border: 1px solid #f0ad4e;
+         //   background-color: #fffbf5;
+            border-radius: 5px;
+        }
+
+
+          
     </style>
         </head>
 <body>
@@ -305,6 +374,10 @@
 
                     <input type="hidden" id="currentTime" name="entry.963017423" value="">
 
+                         <button type="button" class="pay-button" id="openQrModal">
+            QR कोड स्कैन करके भुगतान करें
+                         </button>
+
 
                     <div style="margin-top:20px"> 
                         <button type="submit" class="btn btn-primary" style="width:100%;">Send Order</button>
@@ -313,6 +386,20 @@
             </div>
         </div>
     </section>
+
+        <div id="qrModal" class="modal-qr">
+    <div class="modal-content-qr">
+        <span class="close-qr" id="closeQr">&times;</span>
+        
+        <h3>UPI भुगतान के लिए स्कैन करें</h3>
+        
+        <img src="QR/qrcode.jpg" alt="UPI Payment QR Code"> 
+        <div id="countdownDisplay">5:00</div>  
+        <p style="font-weight: bold; margin-top: 10px;">स्कैन करने के बाद, कृपया UTR/ट्रांज़ैक्शन ID नोट कर लें।</p>
+        <button class="btn-modal-close" id="closeModalButton">भुगतान हो गया, फ़ॉर्म भरें</button>
+ 
+        </div>
+        </div>
     
     <section id="highlights">
         <h2>Why Choose Us?</h2>
@@ -576,6 +663,97 @@
     });
 
     });
+        
+//==================QR CODE===////////
+         // =======================================================
+    // 🛑 CONFIGURATION (यहाँ बदलाव करें!)
+    // =======================================================
+    
+ 
+    // =======================================================
+    // 6. DOM Elements and Global Timer Variable
+    // =======================================================
+    const paymentForm    = document.getElementById('paymentForm');
+  // QR Modal Elements
+    const qrModal = document.getElementById('qrModal');
+    const openQrButton = document.getElementById('openQrModal');
+    const closeQrSpan = document.getElementById('closeQr');
+    const countdownDisplay = document.getElementById('countdownDisplay');
+    const closeModalButton = document.getElementById('closeModalButton');
+
+    let countdownInterval; // टाइमर को कंट्रोल करने के लिए ग्लोबल वेरिएबल
+
+
+    
+    
+    // Function: टाइमर को बंद करना और Modal को छिपाना
+    function stopAndCloseQrModal() {
+        clearInterval(countdownInterval); // टाइमर बंद करें
+        qrModal.style.display = "none";
+        countdownDisplay.style.color = '#d9534f'; // कलर को लाल पर रीसेट करें
+        countdownDisplay.innerText = '5:00'; // डिस्प्ले रीसेट करें
+    }
+
+    // Function: उलटी गिनती शुरू करना
+    function startCountdown() {
+        // अगर पहले से टाइमर चल रहा है, तो उसे बंद करें
+        if (countdownInterval) {
+            clearInterval(countdownInterval);
+        }
+        
+        let timeLeft = 5 * 60; // 5 मिनट = 300 सेकंड
+        countdownDisplay.style.color = '#28a745'; // शुरू में हरा
+        
+        countdownInterval = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            let seconds = timeLeft % 60;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            countdownDisplay.innerText = `${minutes}:${seconds}`;
+            
+            // 1 मिनट से कम होने पर कलर बदलें
+            if (timeLeft <= 60) {
+                countdownDisplay.style.color = '#d9534f'; // लाल
+            }
+            
+            // जब टाइमर समाप्त हो जाए
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                countdownDisplay.innerText = 'समय समाप्त! QR कोड पुराना हो सकता है।';
+                countdownDisplay.style.color = 'red';
+                // आप यहाँ QR कोड इमेज को छिपाने जैसा कोई एक्शन भी जोड़ सकते हैं
+                return;
+            }
+
+            timeLeft--;
+        }, 1000); // हर 1 सेकंड में अपडेट करें
+    }
+
+
+    // =======================================================
+    // 7. Event Listeners for QR Modal & Timer
+    // =======================================================
+    
+    // QR Modal खोलें और टाइमर शुरू करें
+    openQrButton.addEventListener('click', function() {
+        qrModal.style.display = "flex"; 
+        startCountdown();
+    });
+
+    // Close बटन (X), Modal Close बटन और बाहर क्लिक करने पर Modal बंद करें
+    closeQrSpan.addEventListener('click', stopAndCloseQrModal);
+    closeModalButton.addEventListener('click', stopAndCloseQrModal);
+    
+    window.addEventListener('click', function(event) {
+        if (event.target == qrModal) {
+            stopAndCloseQrModal();
+        }
+    });
+
+
+
+
+        
 
 
     // ----------------------------------------------
