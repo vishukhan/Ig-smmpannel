@@ -538,7 +538,7 @@
         document.getElementById('displayPrice').value = '—';
         document.getElementById('displayDesc').value = '—';
 
-        if (mainService && servicePackages[mainService]) {
+         if (mainService && servicePackages[mainService]) {
             servicePackages[mainService].forEach(pkg => {
                 const option = document.createElement('option');
                 option.value = pkg.name; // Use package name as value
@@ -557,10 +557,10 @@
         const mainService = document.getElementById('mainService').value;
         const priceInput = document.getElementById('displayPrice');
         const descTextarea = document.getElementById('displayDesc');
-        const amountPaid = document.getElementById('amountPaid');
-        const utrNumber = document.getElementId('utrNumber');
-      // Find the selected package details
-        if (mainServiceice selectedPackageName)m{) {          const selectedPackage = servicePackages[mainService].find(pkg => pkg.name === selectedPackageName);
+
+        // Find the selected package details
+        if (mainService && selectedPackageName) {
+            const selectedPackage = servicePackages[mainService].find(pkg => pkg.name === selectedPackageName);
             if (selectedPackage) {
                 priceInput.value = selectedPackage.price;
                 descTextarea.value = selectedPackage.desc;
