@@ -453,11 +453,12 @@
     function loadH() {
     db.collection('orders').where('uid','==',auth.currentUser.uid).onSnapshot(s => {
         const historyList = document.getElementById('h-list');
-        historyList.innerHTML = s.docs.map(d => {
-            const o = d.data();
-            // "In Progress" ko "inprogress" bana dega CSS class ke liye
+        // Data ko array mein badal kar reverse kar rahe hain
+        const orders = s.docs.map(d => d.data());
+        orders.sort((a, b) => b.time - a.time); // Latest order first logic
+
+        historyList.innerHTML = orders.map(o => {
             const statusClass = (o.status || 'pending').toLowerCase().replace(/\s/g, '');
-            
             return `
                 <tr>
                     <td>#${o.oid}</td>
