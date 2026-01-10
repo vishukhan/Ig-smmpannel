@@ -451,16 +451,27 @@
 
     // USER HISTORY FIX: Indexing error se bachne ke liye orderBy temporary hataya
     function loadH() {
-        db.collection('orders')
-          .where('uid','==',auth.currentUser.uid)
-          .onSnapshot(s => {
-            let html = s.docs.map(d => {
-                const o = d.data();
-                return `<tr><td>#${o.oid}</td><td>${fmtDate(o.time)}</td><td>${o.cat}</td><td>₹${o.amt.toFixed(2)}</td><td>${o.qty}</td><td><a href="${o.link}" target="_blank">View</a></td><td><span class="badge bg-${o.status.toLowerCase()}">${o.status}</span></td></tr>`;
-            }).join('');
-            document.getElementById('h-list').innerHTML = html || "<tr><td colspan='7'>No orders found.</td></tr>";
-        });
-    }
+    db.collection('orders').where('uid','==',auth.currentUser.uid).onSnapshot(s => {
+        const historyList = document.getElementById('h-list');
+        historyList.innerHTML = s.docs.map(d => {
+            const o = d.data();
+            // "In Progress" ko "inprogress" bana dega CSS class ke liye
+            const statusClass = (o.status || 'pending').toLowerCase().replace(/\s/g, '');
+            
+            return `
+                <tr>
+                    <td>#${o.oid}</td>
+                    <td>${fmtDate(o.time)}</td>
+                    <td>${o.cat}</td>
+                    <td>₹${parseFloat(o.amt).toFixed(2)}</td>
+                    <td>${o.qty}</td>
+                    <td><a href="${o.link}" target="_blank" class="link-text">Link</a></td>
+                    <td><span class="badge bg-${statusClass}">${o.status}</span></td>
+                </tr>`;
+        }).join('');
+    });
+}
+
 
     // ADMIN FUNCTIONS
     function loadAO() {
