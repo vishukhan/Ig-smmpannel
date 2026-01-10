@@ -478,11 +478,11 @@
     function loadAO() {
     db.collection('orders').onSnapshot(s => {
         const adminTable = document.getElementById('a-ord');
-        adminTable.innerHTML = s.docs.map(d => {
-            const o = d.data();
-            // Status name se space hatane ke liye lowercase aur replace use karein
+        const orders = s.docs.map(d => ({id: d.id, ...d.data()}));
+        orders.sort((a, b) => b.time - a.time); // Latest order first
+
+        adminTable.innerHTML = orders.map(o => {
             const safeStatus = (o.status || 'Pending').toLowerCase().replace(/\s/g, '');
-            
             return `
                 <tr>
                     <td>${fmtDate(o.time)}</td>
@@ -492,7 +492,7 @@
                     <td>${o.qty}</td>
                     <td><span class="badge bg-${safeStatus}">${o.status}</span></td>
                     <td>
-                        <select onchange="updateStatus('${d.id}', this.value, '${o.uid}', ${o.amt})">
+                        <select onchange="updateStatus('${o.id}', this.value, '${o.uid}', ${o.amt})">
                             <option value="">Action</option>
                             <option value="In Progress">In Progress</option>
                             <option value="Completed">Completed</option>
