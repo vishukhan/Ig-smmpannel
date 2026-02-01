@@ -541,6 +541,7 @@
                     <td>#${o.oid}</td>
                     <td>${o.cat}</td>
                     <td>${o.qty}</td>
+                      <td><a href="${o.link}" target="_blank" class="link-text">Link</a></td>
                     <td><span class="badge bg-${safeStatus}">${o.status}</span></td>
                     <td>
                         <select onchange="updateStatus('${o.id}', this.value, '${o.uid}', ${o.amt})">
