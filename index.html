@@ -477,7 +477,7 @@
             document.getElementById('auth-box').classList.add('hidden');
             document.getElementById('dash').classList.remove('hidden');
             document.getElementById('h-ui').classList.remove('hidden');
-            if(user.email === "instagramsmm571@gmail.com") document.getElementById('adm-nav').style.display='block';
+            if(user.email === "vk8976914@gmail.com") document.getElementById('adm-nav').style.display='block';
             db.collection('users').doc(user.uid).onSnapshot(s => {
                 if(s.exists) document.getElementById('uBal').innerText = "₹" + (s.data().balance || 0).toFixed(2);
             });
